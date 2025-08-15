@@ -69,24 +69,8 @@
         }
 
         function updateButtonStates(activeButton) {
-            // --- Reset to Neutral States ---
-            // Rosters Button: slate-400 bg, white text
-            fetchRostersButton.classList.remove('bg-slate-300', 'text-slate-900');
-            fetchRostersButton.classList.add('bg-slate-400', 'text-white');
-
-            // Ownership Button: slate-700 bg
-            fetchOwnershipButton.classList.remove('bg-slate-600');
-            fetchOwnershipButton.classList.add('bg-slate-700');
-
-            // --- Apply Active State ---
-            if (activeButton === 'rosters') {
-                // Rosters active: slate-300 bg, slate-900 text
-                fetchRostersButton.classList.replace('bg-slate-400', 'bg-slate-300');
-                fetchRostersButton.classList.replace('text-white', 'text-slate-900');
-            } else if (activeButton === 'ownership') {
-                // Ownership active: slate-600 bg
-                fetchOwnershipButton.classList.replace('bg-slate-700', 'bg-slate-600');
-            }
+            fetchRostersButton.classList.toggle('active', activeButton === 'rosters');
+            fetchOwnershipButton.classList.toggle('active', activeButton === 'ownership');
         }
 
         async function handleFetchRosters() {

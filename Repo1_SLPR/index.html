@@ -13,34 +13,34 @@
 </head>
 <body class="p-2 sm:p-4">
     <div id="header-container">
-        <header class="bg-slate-800/50 p-2 rounded-lg shadow-lg flex flex-col md:flex-row items-center justify-between gap-2">
+        <header class="glass-panel p-2 rounded-lg flex flex-col md:flex-row items-center justify-between gap-2">
             <div class="flex items-center gap-2 w-full md:w-auto">
-                <input type="text" id="usernameInput" placeholder="Sleeper Username" value="The_Oracle" class="w-full min-w-0 bg-slate-900 border-2 border-slate-700 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg py-1 px-3 text-white placeholder-slate-500 transition-colors text-xs">
-                <button id="fetchRostersButton" class="bg-slate-400 hover:bg-slate-500 text-white font-bold py-1 px-3 text-xs rounded-lg transition-colors whitespace-nowrap">Rosters</button>
-                <button id="fetchOwnershipButton" class="bg-slate-700 hover:bg-slate-800 text-white font-bold py-1 px-3 text-xs rounded-lg transition-colors whitespace-nowrap border border-slate-500">Ownership %</button>
+                <input type="text" id="usernameInput" placeholder="Sleeper Username" value="The_Oracle" class="w-full min-w-0 placeholder-slate-500 text-xs">
+                <button id="fetchRostersButton" class="chip-btn text-xs whitespace-nowrap">Rosters</button>
+                <button id="fetchOwnershipButton" class="chip-btn text-xs whitespace-nowrap">Ownership %</button>
             </div>
             <div id="rosterControls" class="flex items-center gap-2 w-full md:w-auto">
                 <div class="flex items-center gap-1">
-                    <button id="compareButton" class="bg-pink-600 text-white font-bold py-1 px-3 text-xs rounded-lg whitespace-nowrap disabled:bg-slate-600 disabled:text-slate-400 disabled:cursor-not-allowed" disabled>Compare</button>
+                    <button id="compareButton" class="chip-btn text-xs whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed" disabled>Compare</button>
                     <button id="clearCompareButton" class="text-xs text-slate-400 hover:text-white underline hidden">Clear</button>
                 </div>
-                <select id="leagueSelect" class="bg-slate-900 border-2 border-slate-700 rounded-lg py-1 px-3 text-white w-full text-xs" disabled>
+                <select id="leagueSelect" class="w-full text-xs" disabled>
                     <option>Select a league...</option>
                 </select>
                 <span id="formatIndicator" class="hidden"></span>
             </div>
         </header>
         <div id="view-controls" class="flex flex-nowrap justify-center items-center p-2 gap-1">
-             <div class="view-switcher flex p-0.5 bg-slate-800 rounded-lg">
-                <button id="positionalViewBtn" class="px-1.5 py-0.5 text-xs font-semibold rounded-md transition-colors">Positional</button>
-                <button id="depthChartViewBtn" class="px-1.5 py-0.5 text-xs font-semibold rounded-md transition-colors">Depth Chart</button>
+             <div class="view-switcher flex p-0.5 glass-panel rounded-lg">
+                <button id="positionalViewBtn" class="chip-btn text-xs font-semibold">Positional</button>
+                <button id="depthChartViewBtn" class="chip-btn text-xs font-semibold">Depth Chart</button>
             </div>
-            <div id="positional-filters" class="flex p-0.5 bg-slate-800 rounded-lg">
-                <button data-position="QB" class="filter-btn px-1.5 py-0.5 text-xs font-semibold rounded-md transition-colors">QB</button>
-                <button data-position="RB" class="filter-btn px-1.5 py-0.5 text-xs font-semibold rounded-md transition-colors">RB</button>
-                <button data-position="WR" class="filter-btn px-1.5 py-0.5 text-xs font-semibold rounded-md transition-colors">WR</button>
-                <button data-position="TE" class="filter-btn px-1.5 py-0.5 text-xs font-semibold rounded-md transition-colors">TE</button>
-                <button data-position="FLX" class="filter-btn px-1.5 py-0.5 text-xs font-semibold rounded-md transition-colors">FLX</button>
+            <div id="positional-filters" class="flex p-0.5 glass-panel rounded-lg">
+                <button data-position="QB" class="filter-btn chip-btn text-xs font-semibold">QB</button>
+                <button data-position="RB" class="filter-btn chip-btn text-xs font-semibold">RB</button>
+                <button data-position="WR" class="filter-btn chip-btn text-xs font-semibold">WR</button>
+                <button data-position="TE" class="filter-btn chip-btn text-xs font-semibold">TE</button>
+                <button data-position="FLX" class="filter-btn chip-btn text-xs font-semibold">FLX</button>
             </div>
         </div>
     </div>
