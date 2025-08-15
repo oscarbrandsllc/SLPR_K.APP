@@ -16,7 +16,6 @@
         const clearCompareButton = document.getElementById('clearCompareButton');
         const positionalViewBtn = document.getElementById('positionalViewBtn');
         const depthChartViewBtn = document.getElementById('depthChartViewBtn');
-        const viewControls = document.getElementById('view-controls');
         const positionalFiltersContainer = document.getElementById('positional-filters');
         const tradeSimulator = document.getElementById('tradeSimulator');
         const mainContent = document.getElementById('content');
@@ -32,6 +31,7 @@
         const API_BASE = 'https://api.sleeper.app/v1';
         const GOOGLE_SHEET_ID = '1MDTf1IouUIrm4qabQT9E5T0FsJhQtmaX55P32XK5c_0';
         const TAG_COLORS = { QB:"var(--pos-qb)", RB:"var(--pos-rb)", WR:"var(--pos-wr)", TE:"var(--pos-te)", BN:"var(--pos-bn)", TX:"var(--pos-tx)", FLX: "var(--pos-flx)", SFLX: "var(--pos-sflx)" };
+        const POS_RANK_COLORS = { QB: '#FF7AB2', RB: '#bbf7e0', WR: '#A0C2F7', TE: '#ffae58' };
         const STARTER_ORDER = ['QB', 'RB', 'WR', 'TE', 'FLEX', 'SUPER_FLEX'];
         const TEAM_COLORS = { ARI:"#97233F", ATL:"#A71930", BAL:"#241773", BUF:"#00338D", CAR:"#0085CA", CHI:"#0B162A", CIN:"#FB4F14", CLE:"#311D00", DAL:"#003594", DEN:"#FB4F14", DET:"#0076B6", GB:"#203731", HOU:"#03202F", IND:"#002C5F", JAX:"#006778", KC:"#E31837", LAC:"#0080C6", LAR:"#003594", LV:"#A5ACAF", MIA:"#008E97", MIN:"#4F2683", NE:"#002244", NO:"#D3BC8D", NYG:"#0B2265", NYJ:"#125740", PHI:"#004C54", PIT:"#FFB612", SEA:"#69BE28", SF:"#B3995D", TB:"#D50A0A", TEN:"#4B92DB", WAS:"#5A1414", FA: "#64748b" };
         const LEAGUE_COLOR_PALETTE = ['#e8d28a', '#bfeee5', '#d9d0ff', '#cfe9ff', '#ffd6e7', '#d9ffcf', '#ffc7a8', '#a8d8ff', '#f2c8ff', '#c8ffde'];
@@ -56,7 +56,6 @@
             await Promise.all([ fetchSleeperPlayers(), fetchDataFromGoogleSheet() ]);
             setLoading(false);
             welcomeScreen.classList.remove('hidden');
-            viewControls.classList.add('hidden'); // Initially hide view controls
         });
 
         // --- View Toggling and Main Handlers ---
@@ -351,14 +350,15 @@
                 if (columns.length < 13) return;
                 const clean = (str) => str ? str.replace(/"/g, '').trim() : '';
                 const pos = clean(columns[2]);
+                const posRank = clean(columns[7]);
                 const sleeperId = clean(columns[12]);
                 const adp = parseFloat(clean(columns[11]));
                 const ktcValue = parseInt(clean(columns[6]), 10);
                 if (pos === 'RDP') {
                     const pickName = clean(columns[1]);
-                    if (pickName) dataMap[pickName] = { adp: null, ktc: ktcValue };
+                    if (pickName) dataMap[pickName] = { adp: null, ktc: ktcValue, posRank: posRank };
                 } else if (sleeperId && sleeperId !== 'NA') {
-                    dataMap[sleeperId] = { adp: isNaN(adp) ? null : adp, ktc: isNaN(ktcValue) ? null : ktcValue };
+                    dataMap[sleeperId] = { adp: isNaN(adp) ? null : adp, ktc: isNaN(ktcValue) ? null : ktcValue, posRank };
                 }
             });
             return dataMap;
@@ -443,7 +443,7 @@
             let displayName = `${player.first_name.charAt(0)}. ${lastName}`;
             if (displayName.length > 15) displayName = displayName.substring(0, 14) + '…';
 
-            return { id: playerId, name: displayName, pos: player.position || '?', age: player.age || '?', team: player.team || 'FA', adp: valueData?.adp || null, ktc: valueData?.ktc || null, slot };
+            return { id: playerId, name: displayName, pos: player.position || '?', posRank: valueData?.posRank || '', age: player.age || '?', team: player.team || 'FA', adp: valueData?.adp || null, ktc: valueData?.ktc || null, slot };
         }
 
         function getPickData(pick) {
@@ -634,17 +634,18 @@
             const ktc = player.ktc || '—';
             const slotAbbr = { 'SUPER_FLEX': 'SFLX', 'FLEX': 'FLX' };
             const displaySlot = state.currentRosterView === 'depth' ? (slotAbbr[player.slot] || player.slot) : player.pos;
-            const teamTagHTML = player.team && player.team !== 'FA' 
-                ? `<div class="team-tag" style="background-color: ${TEAM_COLORS[player.team] || '#64748b'}; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">${player.team}</div>` 
+            const teamTagHTML = player.team && player.team !== 'FA'
+                ? `<div class="team-tag" style="background-color: ${TEAM_COLORS[player.team] || '#64748b'}; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">${player.team}</div>`
                 : `<div class="team-tag" style="background-color: #64748b; color: white;">${player.team || 'FA'}</div>`;
+            const posRankColor = POS_RANK_COLORS[player.posRank.split('·')[0]] || 'var(--color-text-secondary)';
 
             row.innerHTML = `
                 <div class="player-main-line">
-                    <div class="player-name">${player.name}</div>
                     <div class="player-tag" style="background-color: ${TAG_COLORS[displaySlot] || 'var(--pos-bn)'};">${displaySlot}</div>
+                    <div class="player-name">${player.name}</div>
                 </div>
                 <div class="player-meta-line">
-                    <span class="player-pos">${player.pos}</span>
+                    <span class="player-pos-rank" style="color:${posRankColor};">${player.posRank}</span>
                     <span class="separator">•</span>
                     <span>Age: <span class="player-age">${player.age || '?'}</span></span>
                     <span class="separator">•</span>

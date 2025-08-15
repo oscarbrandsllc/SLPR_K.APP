@@ -16,42 +16,47 @@
 <body class="p-2 sm:p-4">
     <div id="header-container">
         <header class="top-bar glass-panel">
-            <div class="username-area">
-                <input type="text" id="usernameInput" placeholder="Enter Sleeper Username..." value="The_Oracle">
+            <div class="top-row">
+                <div class="app-view-switcher">
+                    <button id="fetchRostersButton">Rosters</button>
+                    <button id="fetchOwnershipButton">Ownership %</button>
+                </div>
+                <div class="username-area">
+                    <input type="text" id="usernameInput" placeholder="Enter Sleeper Username..." value="The_Oracle">
+                </div>
             </div>
-            <div class="app-view-switcher">
-                <button id="fetchRostersButton">Rosters</button>
-                <button id="fetchOwnershipButton">Ownership %</button>
+
+            <div id="controls-container" class="hidden">
+                <div id="view-controls">
+                    <div id="rosterControls" class="control-row second-row">
+                        <div class="custom-select-wrapper">
+                            <select id="leagueSelect" disabled>
+                                <option>Select a league...</option>
+                            </select>
+                        </div>
+                        <span id="formatIndicator" class="hidden"></span>
+                        <div class="view-switcher">
+                            <button id="positionalViewBtn">Positional</button>
+                            <button id="depthChartViewBtn">Depth Chart</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row third-row">
+                        <div class="compare-controls">
+                            <button id="compareButton" class="control-button" disabled>Compare</button>
+                            <button id="clearCompareButton" class="control-button-subtle hidden">Clear</button>
+                        </div>
+                        <div id="positional-filters">
+                            <button data-position="QB" class="filter-btn">QB</button>
+                            <button data-position="RB" class="filter-btn">RB</button>
+                            <button data-position="WR" class="filter-btn">WR</button>
+                            <button data-position="TE" class="filter-btn">TE</button>
+                            <button data-position="FLX" class="filter-btn">FLX</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
-
-        <div id="controls-container" class="glass-panel hidden">
-             <div id="rosterControls">
-                <div class="custom-select-wrapper">
-                    <select id="leagueSelect" disabled>
-                        <option>Select a league...</option>
-                    </select>
-                </div>
-                <span id="formatIndicator" class="hidden"></span>
-                <div class="compare-controls">
-                    <button id="compareButton" class="control-button" disabled>Compare</button>
-                    <button id="clearCompareButton" class="control-button-subtle hidden">Clear</button>
-                </div>
-            </div>
-            <div id="view-controls">
-                <div class="view-switcher">
-                    <button id="positionalViewBtn">Positional</button>
-                    <button id="depthChartViewBtn">Depth Chart</button>
-                </div>
-                <div id="positional-filters">
-                    <button data-position="QB" class="filter-btn">QB</button>
-                    <button data-position="RB" class="filter-btn">RB</button>
-                    <button data-position="WR" class="filter-btn">WR</button>
-                    <button data-position="TE" class="filter-btn">TE</button>
-                    <button data-position="FLX" class="filter-btn">FLX</button>
-                </div>
-            </div>
-        </div>
     </div>
     <main id="content" class="container mx-auto">
         <div id="welcome-screen">
