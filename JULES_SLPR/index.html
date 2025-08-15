@@ -16,42 +16,43 @@
 <body class="p-2 sm:p-4">
     <div id="header-container">
         <header class="top-bar glass-panel">
-            <div class="username-area">
+            <div class="header-row top-row">
                 <input type="text" id="usernameInput" placeholder="Enter Sleeper Username..." value="The_Oracle">
+                <div class="app-view-switcher">
+                    <button id="fetchRostersButton">Rosters</button>
+                    <button id="fetchOwnershipButton">Ownership %</button>
+                </div>
             </div>
-            <div class="app-view-switcher">
-                <button id="fetchRostersButton">Rosters</button>
-                <button id="fetchOwnershipButton">Ownership %</button>
+            <div id="controls-container" class="hidden">
+                <div class="header-row second-row">
+                    <div class="league-select-group">
+                        <div class="custom-select-wrapper">
+                            <select id="leagueSelect" disabled>
+                                <option>Select a league...</option>
+                            </select>
+                        </div>
+                        <span id="formatIndicator" class="hidden"></span>
+                    </div>
+                    <div class="view-switcher">
+                        <button id="positionalViewBtn">Positional</button>
+                        <button id="depthChartViewBtn">Depth Chart</button>
+                    </div>
+                </div>
+                <div class="header-row third-row">
+                    <div class="compare-controls">
+                        <button id="compareButton" class="control-button" disabled>Compare</button>
+                        <button id="clearCompareButton" class="control-button-subtle hidden">Clear</button>
+                    </div>
+                    <div id="positional-filters">
+                        <button data-position="QB" class="filter-btn">QB</button>
+                        <button data-position="RB" class="filter-btn">RB</button>
+                        <button data-position="WR" class="filter-btn">WR</button>
+                        <button data-position="TE" class="filter-btn">TE</button>
+                        <button data-position="FLX" class="filter-btn">FLX</button>
+                    </div>
+                </div>
             </div>
         </header>
-
-        <div id="controls-container" class="glass-panel hidden">
-             <div id="rosterControls">
-                <div class="custom-select-wrapper">
-                    <select id="leagueSelect" disabled>
-                        <option>Select a league...</option>
-                    </select>
-                </div>
-                <span id="formatIndicator" class="hidden"></span>
-                <div class="compare-controls">
-                    <button id="compareButton" class="control-button" disabled>Compare</button>
-                    <button id="clearCompareButton" class="control-button-subtle hidden">Clear</button>
-                </div>
-            </div>
-            <div id="view-controls">
-                <div class="view-switcher">
-                    <button id="positionalViewBtn">Positional</button>
-                    <button id="depthChartViewBtn">Depth Chart</button>
-                </div>
-                <div id="positional-filters">
-                    <button data-position="QB" class="filter-btn">QB</button>
-                    <button data-position="RB" class="filter-btn">RB</button>
-                    <button data-position="WR" class="filter-btn">WR</button>
-                    <button data-position="TE" class="filter-btn">TE</button>
-                    <button data-position="FLX" class="filter-btn">FLX</button>
-                </div>
-            </div>
-        </div>
     </div>
     <main id="content" class="container mx-auto">
         <div id="welcome-screen">
